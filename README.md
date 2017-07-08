@@ -2,9 +2,7 @@ vue-leaderboard
 
 An exploratory app for using Vue and Axios to pull data from Express and render it.
 
-===
 To start the app, run node server.js and navigate to 127.0.0.1:8080/leaderboard.html
-===
 
 TODO:
 1. Render a list of athletes, ranked in an order provided by the server.
