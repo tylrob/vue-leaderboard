@@ -1,0 +1,19 @@
+{
+  "name": "vue-leaderboard",
+  "version": "1.0.0",
+  "description": "An exploratory app for Vue and Axios with Express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tylrob/vue-leaderboard.git"
+  },
+  "author": "Tyler Robinson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tylrob/vue-leaderboard/issues"
+  },
+  "homepage": "https://github.com/tylrob/vue-leaderboard#readme"
+}

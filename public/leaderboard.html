@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vue Leaderboard</title>
+  <script src="js/vue.js"></script>
+  <script src="js/axios.js"></script>
+  <script src="js/lodash.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>{{ message }}</p>
+    <button v-on:click="changeText">Click to change text</button>
+    <button v-on:click="changeOrder">Click to change order</button>
+    <ol>
+      <template v-for="athlete in athletes">
+        <li>{{ athlete.name }}</li>
+      </template>
+    </ol>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue Leaderboard!',
+        orderBy: 'desc',
+        athletes: [
+          {
+            name: 'Aaron'
+          },
+          {
+            name: 'Beth'
+          },
+          {
+            name: 'Carl'
+          },
+          {
+            name: 'Diane'
+          }
+        ]
+      },
+      methods: {
+        changeText: function(){
+          this.message = 'new text replaced...'
+        },
+        changeOrder: function(){
+          this.athletes = _.orderBy(this.athletes, ['name'], [this.orderBy]);
+          if (this.orderBy == 'asc') {
+            this.orderBy = 'desc';
+            return;
+          } else {
+            this.orderBy = 'asc';
+            return;
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
