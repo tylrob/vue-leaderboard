@@ -5,19 +5,59 @@
   <script src="js/vue.js"></script>
   <script src="js/axios.js"></script>
   <script src="js/lodash.min.js"></script>
-
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <style>
+    .flip-list-move {
+      transition: transform 0.5s;
+    }
+    .container {
+      border-style: solid;
+      border-width: 1px;
+      padding: 0.25rem;
+      margin-bottom: 0.5rem;
+      background-color: #d3d3d3;
+    }
+    .score {
+      background-color: black;
+      color: white;
+      padding: 0.5rem;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      min-width: 20px;
+    }
+    .athlete-detail {
+      padding: 0.5rem;
+      display:inline-block;
+      vertical-align: middle;
+    }
+    .title {
+      margin-top: 1rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+    }
+    body {
+      padding: 1rem;
+    }
+  </style>
 </head>
 <body>
   <div id="app">
-    <p>{{ message }}</p>
-    <button v-on:click="changeText">Click to change text</button>
-    <button v-on:click="changeOrder">Click to change order</button>
-    <ol>
-      <template v-for="athlete in athletes">
-        <li>{{ athlete.name }}</li>
-      </template>
-    </ol>
+    <button v-on:click="randomRanks">Random ranks and sort</button>
+    <div class="container title">
+      <h3>Vue Event 2017</h3>
+    </div>
+    <transition-group name="flip-list" tag="div">
+      <div class="container" v-for="athlete in athletes" v-bind:key="athlete.id">
+        <div class="score">{{ athlete.score }}</div>
+        <div class="athlete-detail">
+          <div><h3>{{ athlete.name }}</h3></div>
+          <div>{{ athlete.gym }}</div>
+        </div>
+      </div>
+    </transition-group>
   </div>
-<script src="js/app/leaderboard.js"></script>
+  <script src="js/app/leaderboard.js"></script>
 </body>
 </html>

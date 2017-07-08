@@ -7,31 +7,39 @@ window.onload = function () {
       orderBy: 'desc',
       athletes: [
         {
-          name: 'Aaron'
+          id: 'id1',
+          name: 'Aaron',
+          gym: 'CrossFit Greensboro',
+          score: 0
         },
         {
-          name: 'Beth'
+          id: 'id2',
+          name: 'Beth',
+          gym: 'CrossFit 919',
+          score: 0
         },
         {
-          name: 'Carl'
+          id: 'id3',
+          name: 'Carl',
+          gym: 'CrossFit Chapel Hill',
+          score: 0
         },
         {
-          name: 'Diane'
+          id: 'id4',
+          name: 'Diane',
+          gym: 'CrossFit RTP',
+          score: 0
         }
       ]
     },
     methods: {
-      changeText: function () {
-        this.message = 'new text replaced...'
-      },
-      changeOrder: function () {
-        this.athletes = _.orderBy(this.athletes, ['name'], [this.orderBy])
-        if (this.orderBy === 'asc') {
-          this.orderBy = 'desc'
-        } else {
-          this.orderBy = 'asc'
-        }
+      randomRanks: function(){
+        _.each(this.athletes, function(athlete){
+          athlete.score = _.random(0,10);
+        });
+        this.athletes = _.orderBy(this.athletes, ['score', 'name'],
+          ['desc', 'asc']);
       }
     }
-  })
+  });
 }
