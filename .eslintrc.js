@@ -10,6 +10,7 @@ module.exports = {
     },
     "globals":{
       "Vue": true,
-      "_": true
+      "_": true,
+      "axios": true
     }
 };

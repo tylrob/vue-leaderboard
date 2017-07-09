@@ -5,6 +5,9 @@ window.onload = function () {
     data: {
       message: 'Hello Vue Leaderboard!',
       orderBy: 'desc',
+      pollSecs: 5000,
+      pollTimeout: null,
+      pollEnabled: false,
       athletes: [
         {
           id: 'id1',
@@ -33,33 +36,49 @@ window.onload = function () {
       ]
     },
     methods: {
-      randomRanks: function(){
-        _.each(this.athletes, function(athlete){
-          athlete.score = _.random(0,10);
-        });
+      randomRanks: function () {
+        _.each(this.athletes, function (athlete) {
+          athlete.score = _.random(0, 10)
+        })
         this.athletes = _.orderBy(this.athletes, ['score', 'name'],
-          ['desc', 'asc']);
+          ['desc', 'asc'])
       },
-      axiosGet: function(){
+      axiosGet: function () {
         axios.get('/api/athletes')
-          .then(function(response){
-            console.log(JSON.stringify(response.data, null, '\t'));
-            vm.athletes = response.data;
+          .then(function (response) {
+            console.log(JSON.stringify(response.data, null, '\t'))
+            vm.athletes = response.data
           })
-          .catch(function(error){
-            console.log(error);
-          });
+          .catch(function (error) {
+            console.log(error)
+          })
       },
-      serverShuffle: function(){
+      serverShuffle: function () {
         axios.put('/api/shuffle')
-          .then(function(response){
-            console.log(JSON.stringify(response.data, null, '\t'));
-            vm.athletes = response.data;
+          .then(function (response) {
+            console.log(JSON.stringify(response.data, null, '\t'))
+            vm.athletes = response.data
           })
-          .catch(function(error){
-            console.log(error);
-          });
+          .catch(function (error) {
+            console.log(error)
+          })
+      },
+      pollResults: function () {
+        var self = this
+        this.pollEnabled = true
+        axios.put('/api/shuffle')
+          .then(function (response) {
+            vm.athletes = response.data
+            if (self.pollEnabled) {
+              self.pollTimeout = setTimeout(self.pollResults, self.pollSecs)
+            }
+          })
+      },
+      stopPolling: function () {
+        clearTimeout(this.pollTimeout)
+        this.pollTimeout = null
+        this.pollEnabled = false
       }
     }
-  });
+  })
 }
