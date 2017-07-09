@@ -30,17 +30,21 @@ var athletes = [
 ];
 
 router.get('/athletes', function(req, res){
-  console.log('scores: ' + JSON.stringify(athletes, null, '\t'));
+  //console.log('scores: ' + JSON.stringify(athletes, null, '\t'));
   res.send(athletes);
 });
 
 router.put('/shuffle', function(req, res){
-  athletes = _.each(athletes, function(athlete){
-    athlete.score = _.random(0,10);
-  });
-  athletes = _.orderBy(athletes, ['score', 'name'], ['desc', 'asc']);
-  console.log('scores: ' + JSON.stringify(athletes, null, '\t'));
-  res.send(athletes);
+  //added fake delay to test client behavior
+  var delay = _.random(1,5) * 1000;
+  setTimeout(function(){
+    athletes = _.each(athletes, function(athlete){
+      athlete.score = _.random(0,10);
+    });
+    athletes = _.orderBy(athletes, ['score', 'name'], ['desc', 'asc']);
+    //console.log('scores: ' + JSON.stringify(athletes, null, '\t'));
+    res.send(athletes);    
+  }, delay);
 });
 
 module.exports = router;
