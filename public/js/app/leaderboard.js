@@ -39,6 +39,26 @@ window.onload = function () {
         });
         this.athletes = _.orderBy(this.athletes, ['score', 'name'],
           ['desc', 'asc']);
+      },
+      axiosGet: function(){
+        axios.get('/api/athletes')
+          .then(function(response){
+            console.log(JSON.stringify(response.data, null, '\t'));
+            vm.athletes = response.data;
+          })
+          .catch(function(error){
+            console.log(error);
+          });
+      },
+      serverShuffle: function(){
+        axios.put('/api/shuffle')
+          .then(function(response){
+            console.log(JSON.stringify(response.data, null, '\t'));
+            vm.athletes = response.data;
+          })
+          .catch(function(error){
+            console.log(error);
+          });
       }
     }
   });

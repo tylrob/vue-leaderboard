@@ -44,7 +44,9 @@
 </head>
 <body>
   <div id="app">
-    <button v-on:click="randomRanks">Random ranks and sort</button>
+    <button v-on:click="randomRanks">Local random ranks and sort</button>
+    <button v-on:click="axiosGet">GET /api/athletes</button>
+    <button v-on:click="serverShuffle">PUT /api/shuffle</button>
     <div class="container title">
       <h3>Vue Event 2017</h3>
     </div>
