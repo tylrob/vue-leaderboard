@@ -47,9 +47,9 @@
     <button v-on:click="randomRanks">Local random ranks and sort</button>
     <button v-on:click="axiosGet">GET /api/athletes</button>
     <button v-on:click="serverShuffle">PUT /api/shuffle</button>
-    <button v-on:click="pollResults">Start Polling</button>
-    <button v-on:click="stopPolling">Stop Polling</button>
-    <span>Polling enabled: {{pollEnabled}}</span>
+    <button v-on:click="pollResults" v-if="!pollEnabled">Start Polling</button>
+    <button v-on:click="stopPolling" v-if="pollEnabled">Stop Polling</button>
+    <button v-on:click="addAthlete">Add Athlete</button>
     <div class="container title">
       <h3>Vue Event 2017</h3>
     </div>

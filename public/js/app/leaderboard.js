@@ -64,13 +64,12 @@ window.onload = function () {
           })
       },
       pollResults: function () {
-        var self = this
         this.pollEnabled = true
         axios.put('/api/shuffle')
           .then(function (response) {
             vm.athletes = response.data
-            if (self.pollEnabled) {
-              self.pollTimeout = setTimeout(self.pollResults, self.pollSecs)
+            if (vm.pollEnabled) {
+              vm.pollTimeout = setTimeout(vm.pollResults, vm.pollSecs)
             }
           })
       },
@@ -78,6 +77,19 @@ window.onload = function () {
         clearTimeout(this.pollTimeout)
         this.pollTimeout = null
         this.pollEnabled = false
+      },
+      addAthlete: function () {
+        var athlete = {
+          name: 'Tyler',
+          gym: 'Pewter',
+          score: _.random(0, 10)
+        }
+        axios.post('/api/athletes', athlete)
+          .then(function (response) {
+            vm.athletes.push(response.data)
+            vm.athletes = _.orderBy(vm.athletes, ['score', 'name'],
+              ['desc', 'asc'])
+          })
       }
     }
   })

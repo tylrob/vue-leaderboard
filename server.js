@@ -4,11 +4,12 @@ var express = require('express')
 var app = express()
 var port = process.env.PORT
 var morgan = require('morgan')
+var bodyParser = require('body-parser')
 
 // Set up express application
 app.use(express.static('public')) // serve static resources in /public
 app.use(morgan('dev')) // morgan will log every request to console
-
+app.use(bodyParser.json())
 // Import routes
 // See https://expressjs.com/en/guide/routing.html for details on this pattern
 var api = require('./app/routers/api.js') // get the router
