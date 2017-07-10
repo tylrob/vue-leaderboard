@@ -7,6 +7,7 @@
   <script src="js/lodash.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/reset.css">
   <style>
+
     .flip-list-move {
       transition: transform 0.5s;
     }
@@ -49,7 +50,8 @@
     <button v-on:click="serverShuffle">PUT /api/shuffle</button>
     <button v-on:click="pollResults" v-if="!pollEnabled">Start Polling</button>
     <button v-on:click="stopPolling" v-if="pollEnabled">Stop Polling</button>
-    <button v-on:click="addAthlete">Add Athlete</button>
+    <button v-on:click="addAthlete" v-if="tyler.id===null">Add Athlete</button>
+    <button v-on:click="removeAthlete" v-if="tyler.id!==null">Remove Athlete</button>
     <div class="container title">
       <h3>Vue Event 2017</h3>
     </div>

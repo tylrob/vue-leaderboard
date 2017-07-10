@@ -37,6 +37,7 @@ function getAthletes () {
 }
 
 function setAthletes (newAthletes) {
+  newAthletes = _.orderBy(newAthletes, ['score', 'name'], ['desc', 'asc'])
   cache.put('athletes', newAthletes)
 }
 
@@ -51,6 +52,14 @@ function addAthlete (athlete) {
   athletes = _.orderBy(athletes, ['score', 'name'], ['desc', 'asc'])
   cache.put('athletes', athletes)
   return athlete
+}
+
+function removeAthlete (id) {
+  var athletes = getAthletes()
+  _.remove(athletes, {
+    id: id
+  })
+  setAthletes(athletes)
 }
 
 router.get('/athletes', function (req, res) {
@@ -79,6 +88,17 @@ router.post('/athletes', function (req, res) {
     var athlete = addAthlete(body)
     res.status(201)
     res.send(athlete)
+  }
+  res.status(400)
+  res.send()
+})
+
+router.delete('/athletes/:id', function (req, res) {
+  var id = req.params.id
+  if (id) {
+    removeAthlete(id)
+    res.status(200)
+    res.send(id)
   }
   res.status(400)
   res.send()

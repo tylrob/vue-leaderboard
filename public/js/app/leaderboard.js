@@ -33,7 +33,13 @@ window.onload = function () {
           gym: 'CrossFit RTP',
           score: 0
         }
-      ]
+      ],
+      tyler: {
+        id: null,
+        name: 'Tyler',
+        gym: 'Pewter',
+        score: _.random(0, 10)
+      }
     },
     methods: {
       randomRanks: function () {
@@ -79,16 +85,26 @@ window.onload = function () {
         this.pollEnabled = false
       },
       addAthlete: function () {
-        var athlete = {
-          name: 'Tyler',
-          gym: 'Pewter',
-          score: _.random(0, 10)
-        }
-        axios.post('/api/athletes', athlete)
+        axios.post('/api/athletes', vm.tyler)
           .then(function (response) {
-            vm.athletes.push(response.data)
+            vm.tyler = response.data
+            vm.athletes.push(vm.tyler)
             vm.athletes = _.orderBy(vm.athletes, ['score', 'name'],
               ['desc', 'asc'])
+          })
+      },
+      removeAthlete: function () {
+        axios.delete('/api/athletes/' + vm.tyler.id)
+          .then(function (response) {
+            vm.tyler.id = null
+            var index = _.findIndex(vm.athletes, function (a) {
+              return a.id === vm.tyler.id
+            })
+            if (index > -1) {
+              vm.athletes.splice(index, 1)
+            }
+          }).catch(function (res) {
+            console.log(res)
           })
       }
     }
