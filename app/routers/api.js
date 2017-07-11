@@ -31,9 +31,11 @@ var _athletes = [
 
 function getAthletes () {
   if (cache.get('athletes') === null) {
-    cache.put('athletes', _athletes)
+    setAthletes(_athletes)
   }
-  return cache.get('athletes')
+  var athletes = cache.get('athletes')
+
+  return _.orderBy(athletes, ['score', 'name'], ['desc', 'asc'])
 }
 
 function setAthletes (newAthletes) {
@@ -49,8 +51,7 @@ function addAthlete (athlete) {
   var id = _.random(10, 1000)
   athlete.id = 'id' + id
   athletes.push(athlete)
-  athletes = _.orderBy(athletes, ['score', 'name'], ['desc', 'asc'])
-  cache.put('athletes', athletes)
+  setAthletes(athletes)
   return athlete
 }
 
