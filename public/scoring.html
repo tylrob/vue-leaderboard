@@ -67,7 +67,7 @@
   <script type="text/x-template" id="athlete-template">
     <div class="container">
     <div class="score">
-      <input type="text" v-model="athlete.score" @keyup="dirtyInput" placeholder="score"/>
+      <input type="text" v-model.number="athlete.score" @keyup="dirtyInput" placeholder="score"/>
     </div>
     <div class="athlete-detail">
       <div><h3>{{ athlete.name }}</h3></div>
