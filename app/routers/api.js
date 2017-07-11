@@ -54,6 +54,22 @@ function addAthlete (athlete) {
   return athlete
 }
 
+function updateAthlete (athlete) {
+  var athletes = getAthletes()
+  if (athletes == null || typeof athletes !== 'object') {
+    athletes = []
+  }
+  var existingAthleteIndex = _.findIndex(athletes, function (a) {
+    return a.id === athlete.id
+  })
+  if (existingAthleteIndex === -1) {
+    return null
+  }
+  athletes[existingAthleteIndex] = athlete
+  setAthletes(athletes)
+  return athlete
+}
+
 function removeAthlete (id) {
   var athletes = getAthletes()
   _.remove(athletes, {
@@ -91,6 +107,22 @@ router.post('/athletes', function (req, res) {
   }
   res.status(400)
   res.send()
+})
+
+router.put('/athletes', function (req, res) {
+  var athlete = req.body
+  if (athlete) {
+    if (updateAthlete(athlete) != null) {
+      res.status(201)
+      res.send(athlete)
+    } else {
+      res.status(404)
+      res.send('Athlete not found')
+    }
+  } else {
+    res.status(400)
+    res.send('Bad Data')
+  }
 })
 
 router.delete('/athletes/:id', function (req, res) {

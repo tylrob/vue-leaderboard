@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vue Leaderboard</title>
+  <script src="js/vue.js"></script>
+  <script src="js/axios.js"></script>
+  <script src="js/lodash.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <style>
+
+    .flip-list-move {
+      transition: transform 0.5s;
+    }
+    .container {
+      border-style: solid;
+      border-width: 1px;
+      padding: 0.25rem;
+      margin-bottom: 0.5rem;
+      background-color: #d3d3d3;
+    }
+    .score, input {
+      background-color: black;
+      color: white;
+      padding: 0.5rem;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      min-width: 20px;
+    }
+    .athlete-detail {
+      padding: 0.5rem;
+      display:inline-block;
+      vertical-align: middle;
+    }
+    .publish-score, button{
+      padding: 0.5rem;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      min-width: 20px;
+    }
+    .title {
+      margin-top: 1rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+    }
+    body {
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="container title">
+      <h3>Vue Event 2017</h3>
+    </div>
+<transition-group name="flip-list" tag="div">
+  <athlete-publish v-for="athlete in athletes" v-bind:key="athlete.id" v-bind:athlete="athlete" v-on:published="sortAthletes">
+  </athlete-publish>
+
+</transition-group>
+  </div>
+
+  <script src="js/app/scoring.js"></script>
+
+  <script type="text/x-template" id="athlete-template">
+    <div class="container">
+    <div class="score">
+      <input type="text" v-model="athlete.score" @keyup="dirtyInput" placeholder="score"/>
+    </div>
+    <div class="athlete-detail">
+      <div><h3>{{ athlete.name }}</h3></div>
+      <div>{{ athlete.gym }}</div>
+    </div>
+    <div class="publish-score"><button v-on:click="publishScore" :disabled="!dirtied">{{publishingText}}</button></div>
+  </div>
+</script>
+</body>
+</html>
