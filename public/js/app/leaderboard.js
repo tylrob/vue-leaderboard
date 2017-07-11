@@ -71,7 +71,7 @@ window.onload = function () {
       },
       pollResults: function () {
         this.pollEnabled = true
-        axios.put('/api/shuffle')
+        axios.get('/api/athletes')
           .then(function (response) {
             vm.athletes = response.data
             if (vm.pollEnabled) {
