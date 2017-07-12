@@ -9,11 +9,16 @@
   <style>
 
     .leaderboard-enter, .leaderboard-leave-to {
-      opacity: 0;
-      transform: translateX(30px);
+      transition: all 0.5s;
     }
     .leaderboard-leave-active {
       position: absolute;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all 0.5s;
+    }
+    .leaderboard-move {
+      transition: transform 1s;
     }
     .leaderboard-styling {
       border-style: solid;
@@ -21,7 +26,6 @@
       padding: 0.25rem;
       margin-bottom: 0.5rem;
       background-color: #d3d3d3;
-      transition: all 0.5s;
       width: 80%;
     }
     .score {
@@ -61,7 +65,7 @@
     <div class="container title">
       <h3>Vue Event 2017</h3>
     </div>
-    <transition-group name="leaderboard" tag="div">
+    <transition-group name="leaderboard" tag="div" appear>
       <div class="leaderboard-styling" v-for="athlete in athletes" v-bind:key="athlete.id">
         <div class="score">{{ athlete.score }}</div>
         <div class="athlete-detail">
