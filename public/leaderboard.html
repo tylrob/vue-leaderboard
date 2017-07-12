@@ -8,15 +8,21 @@
   <link rel="stylesheet" type="text/css" href="css/reset.css">
   <style>
 
-    .flip-list-move {
-      transition: transform 0.5s;
+    .leaderboard-enter, .leaderboard-leave-to {
+      opacity: 0;
+      transform: translateX(30px);
     }
-    .container {
+    .leaderboard-leave-active {
+      position: absolute;
+    }
+    .leaderboard-styling {
       border-style: solid;
       border-width: 1px;
       padding: 0.25rem;
       margin-bottom: 0.5rem;
       background-color: #d3d3d3;
+      transition: all 0.5s;
+      width: 80%;
     }
     .score {
       background-color: black;
@@ -55,8 +61,8 @@
     <div class="container title">
       <h3>Vue Event 2017</h3>
     </div>
-    <transition-group name="flip-list" tag="div">
-      <div class="container" v-for="athlete in athletes" v-bind:key="athlete.id">
+    <transition-group name="leaderboard" tag="div">
+      <div class="leaderboard-styling" v-for="athlete in athletes" v-bind:key="athlete.id">
         <div class="score">{{ athlete.score }}</div>
         <div class="athlete-detail">
           <div><h3>{{ athlete.name }}</h3></div>
