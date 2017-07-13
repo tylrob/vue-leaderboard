@@ -8,6 +8,7 @@ window.onload = function () {
       pollSecs: 5000,
       pollTimeout: null,
       pollEnabled: false,
+      query: '',
       athletes: [
         {
           id: 'id1',
@@ -106,6 +107,15 @@ window.onload = function () {
           }).catch(function (res) {
             console.log(res)
           })
+      }
+    },
+    computed: {
+      computedList: function() {
+        var self = this
+        return _.filter(this.athletes, function (athlete) {
+          return athlete.name.toLowerCase()
+            .indexOf(self.query.toLowerCase()) !== -1
+        })
       }
     }
   })

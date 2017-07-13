@@ -7,26 +7,21 @@
   <script src="js/lodash.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/reset.css">
   <style>
-
-    .leaderboard-enter, .leaderboard-leave-to {
-      transition: all 0.5s;
-    }
-    .leaderboard-leave-active {
-      position: absolute;
-      opacity: 0;
-      transform: translateX(30px);
-      transition: all 0.5s;
-    }
-    .leaderboard-move {
-      transition: transform 1s;
-    }
-    .leaderboard-styling {
+    .leaderboard-items {
+      transition: all 0.5s;   
       border-style: solid;
       border-width: 1px;
       padding: 0.25rem;
       margin-bottom: 0.5rem;
       background-color: #d3d3d3;
-      width: 80%;
+      width: 800px;
+    }
+    .leaderboard-enter, .leaderboard-leave-to {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    .leaderboard-leave-active {
+      position: absolute;
     }
     .score {
       background-color: black;
@@ -44,6 +39,12 @@
     }
     .title {
       margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    input {
+      font-size: 1.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
     }
     h3 {
       font-size: 1.5rem;
@@ -65,8 +66,9 @@
     <div class="container title">
       <h3>Vue Event 2017</h3>
     </div>
-    <transition-group name="leaderboard" tag="div" appear>
-      <div class="leaderboard-styling" v-for="athlete in athletes" v-bind:key="athlete.id">
+    <div><input placeholder="Type to filter..." v-model="query"></div>
+    <transition-group name="leaderboard" tag="div">
+      <div class="leaderboard-items" v-for="athlete in computedList" v-bind:key="athlete.id">
         <div class="score">{{ athlete.score }}</div>
         <div class="athlete-detail">
           <div><h3>{{ athlete.name }}</h3></div>

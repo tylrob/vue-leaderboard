@@ -86,17 +86,14 @@ router.get('/athletes', function (req, res) {
 
 router.put('/shuffle', function (req, res) {
   // added fake delay to test client behavior
-  var delay = _.random(1, 5) * 1000
   var athletes = getAthletes()
-  setTimeout(function () {
-    athletes = _.each(athletes, function (athlete) {
-      athlete.score = _.random(0, 10)
-    })
-    athletes = _.orderBy(athletes, ['score', 'name'], ['desc', 'asc'])
-    // console.log('scores: ' + JSON.stringify(athletes, null, '\t'));
-    setAthletes(athletes)
-    res.send(athletes)
-  }, delay)
+  athletes = _.each(athletes, function (athlete) {
+    athlete.score = _.random(0, 10)
+  })
+  athletes = _.orderBy(athletes, ['score', 'name'], ['desc', 'asc'])
+  // console.log('scores: ' + JSON.stringify(athletes, null, '\t'));
+  setAthletes(athletes)
+  res.send(athletes)
 })
 
 router.post('/athletes', function (req, res) {
