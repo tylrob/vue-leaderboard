@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vue Form</title>
+  <script src="js/vue.js"></script>
+  <script src="js/lodash.min.js"></script>
+  <script src="js/validate.js"></script>
+  <script src="js/constraints.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <style>
+      h3 {
+          font-size: 1.5em;
+      }
+      body {
+        margin: 15px;
+      }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h3>Vue Event 2017</h3>
+    <form ref="myForm" v-on:submit.prevent="onSubmit" action="/api/form" method="post">
+        <p>Your name: <input v-on:change="form.athlete.isDirty = true" v-model.lazy="form.athlete.value" name="athleteName"></p>
+        <ul v-if="form.athlete.error || (showAllErrors == true)">
+          <li v-for="error in form.athlete.errorMsgs" >{{ error }}</li>
+        </ul>       
+        <p>Your price: <input v-on:change="form.eventPrice.isDirty = true" v-model.lazy="form.eventPrice.value" name="eventPrice"></p>
+        <ul v-if="form.eventPrice.error || (showAllErrors == true)">
+          <li v-for="error in form.eventPrice.errorMsgs">{{ error }}</li>
+        </ul>
+        <button type="submit">Submit</button>
+        <br>
+        <br>
+        <p>Athlete Name Dirty? {{ form.athlete.isDirty }}</p>
+        <p>Athlete Age Dirty? {{ form.eventPrice.isDirty }}</p>
+        <br>
+        <p>athlete object: {{ form.athlete }}</p>
+        <br>
+        <p>price object: {{ form.eventPrice }}</p>
+    </form>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        form: {
+          athlete: {
+            value: '',
+            error: false,
+            errorMsgs: [],
+            isDirty: false
+          },
+          eventPrice: {
+            value: '',
+            error: false,
+            errorMsgs: [],
+            isDirty: false
+          }   
+        },
+        showAllErrors: false,
+        formConstraints: constraints
+      },
+      watch: {
+        'form.athlete.value': function () {
+          this.validateInput('athlete')
+        },
+        'form.eventPrice.value': function () {
+          this.validateInput('eventPrice')
+        }
+      },
+      methods: {
+        validateInput: function (inputKey) {
+          //Object reshaping to map up the Vue data to what validatejs expects
+          var errors = validate({[inputKey]: this.form[inputKey].value},
+            {[inputKey]: this.formConstraints[inputKey]},
+            {fullMessages: false})
+
+          //If there are errors, show the error element
+          //and store the error messages
+          if (!errors) {
+            this.form[inputKey].error = false
+          } else {         
+            this.form[inputKey].error = true
+            this.form[inputKey].errorMsgs = errors[inputKey]
+          }
+        },
+        validateAllInputs: function () {
+          var inputKeys = Object.keys(this.form)
+          var vm = this
+          inputKeys.forEach(function (inputKey) {
+            vm.validateInput(inputKey)
+          })
+        },
+        formHasErrors: function () {
+          var errorExists = false
+          var inputKeys = Object.keys(this.form)
+          var vm = this
+          inputKeys.forEach(function (inputKey) {
+            if (vm.form[inputKey].error == true) {
+              errorExists = true
+            }
+          })
+          return errorExists ? true : false
+        },
+        onSubmit: function () {
+          this.validateAllInputs()
+          if (this.formHasErrors()) {
+            return false
+          } else {
+            //to submit the form you have to refer to the $ref
+            //this gets the element which is a form that you can submit()
+            return this.$refs.myForm.submit()
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

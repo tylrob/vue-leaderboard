@@ -134,4 +134,9 @@ router.delete('/athletes/:id', function (req, res) {
   res.send()
 })
 
+router.post('/form', function (req, res) {
+  console.log(JSON.stringify(req.body))
+  return res.status(200).redirect('/form.html')
+})
+
 module.exports = router
